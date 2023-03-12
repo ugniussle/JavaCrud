@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${title}"></title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+</head>
+<body class="bg-red-200">
+<h1 th:text="${title}" class="text-center mt-6 pb-6 text-2xl font-black text-gray-700 shadow-lg shadow-red-400/50 border-b border-red-300"></h1>
+
+<span>
+    <!-- class="mt-5 inline-block w-full mx-auto" -->
+    <svg class="mt-5 inline-block w-full mx-auto icon glyph" width="180px" height="180px" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg" id="create-note" fill="#000000" stroke="#000000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M20.71,3.29a2.91,2.91,0,0,0-2.2-.84,3.25,3.25,0,0,0-2.17,1L9.46,10.29s0,0,0,0a.62.62,0,0,0-.11.17,1,1,0,0,0-.1.18l0,0L8,14.72A1,1,0,0,0,9,16a.9.9,0,0,0,.28,0l4-1.17,0,0,.18-.1a.62.62,0,0,0,.17-.11l0,0,6.87-6.88a3.25,3.25,0,0,0,1-2.17A2.91,2.91,0,0,0,20.71,3.29Z"></path><path d="M20,22H4a2,2,0,0,1-2-2V4A2,2,0,0,1,4,2h8a1,1,0,0,1,0,2H4V20H20V12a1,1,0,0,1,2,0v8A2,2,0,0,1,20,22Z" style="fill:#231f20"></path></g></svg>
+</span>
+
+<div class="w-11/12 sm:w-10/12 md:w-8/12 lg:w-5/12 mt-6 p-6 mx-auto bg-orange-200 rounded-xl border-4 border-red-500 shadow-2xl shadow-red-400/80 ring ring-red-700">
+  <div>
+      <form method="post" action="/create">
+          <div>
+              <div class="w-full mx-auto mt-3 text-center">
+                  <div th:each="field, iterStat: ${fields}">
+                      <label th:name="${field}" th:text="${translations[iterStat.index]}" class="inline-block w-full text-center text-2xl font-bold text-gray-700"/>
+                      <input th:name="${field}" type="text" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+                  </div>
+
+              </div>
+              <div class="text-center">
+                  <button class="mx-auto mt-4 p-4 px-8 bg-red-500 rounded-sm border-2 border-gray-800 text-2xl font-bold tracking-wider">Sukurti</button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+</body>
+</html>
