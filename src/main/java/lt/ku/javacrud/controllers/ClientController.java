@@ -25,7 +25,7 @@ public class ClientController {
 
     @GetMapping("/")
     public String clients(Model model) {
-        List<Client> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.getClients();
 
         model.addAttribute("title", "Klientų sąrašas");
         model.addAttribute("fields", fields);
@@ -134,7 +134,7 @@ public class ClientController {
 
     private List<String> getClassFields(Class<Client> entity) {
         Field[] declaredFields = entity.getDeclaredFields();
-        ArrayList<String> fields = new ArrayList<String>();
+        ArrayList<String> fields = new ArrayList<>();
 
         for (Field declaredField : declaredFields) {
             String str = declaredField.toString();
