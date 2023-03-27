@@ -6,6 +6,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 </head>
 <body class="bg-red-200">
+<nav th:replace="~{fragments/layout :: nav}"></nav>
 <h1 th:text="${title}" class="text-center mt-6 pb-6 text-2xl font-black text-gray-700 shadow-lg shadow-red-400/50 border-b border-red-300"></h1>
 
 <span>
@@ -19,25 +20,16 @@
                 <thead class="text-xl font-bold text-gray-700 bg-orange-300">
                     <tr>
                         <td th:each="field: ${translatedFields}" th:text="${#strings.capitalize(field)}" class="border border-red-500 bg-orange-300"/>
-                        <td class="font-bolder tracking-wider">Keisti</td>
                         <td class="font-bolder tracking-wider">Trinti</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="client: ${clients}">
+                    <tr th:each="registration: ${registrations}">
                         <td th:each="field: ${fields}" class="border border-red-500 bg-orange-200 max-w-[6rem]">
-                            <div th:text="${client.getAttribute(field)}" class="overflow-x-auto h-full"></div>
-                        </td>
-
-                        <td>
-                            <a th:href="'/edit/'+${client.id}">
-                                <button class="mx-auto p-1 bg-red-500 rounded-sm border-2 border-gray-800 text-xl font-bolder tracking-wider">
-                                    Keisti
-                                </button>
-                            </a>
+                            <div th:text="${registration.getAttribute(field)}" class="overflow-x-auto h-full"></div>
                         </td>
                         <td>
-                            <a th:href="'/delete/'+${client.id}">
+                            <a th:href="'/registrations/delete/'+${registration.id}">
                                 <button class="mx-auto p-1 bg-black rounded-sm border-2 border-red-500 text-red-500 text-xl font-black tracking-wider">
                                     Trinti
                                 </button>
@@ -48,8 +40,10 @@
             </table>
         </div>
     <div class="text-center">
-        <a href="/create">
-            <button class="mx-auto mt-4 p-4 px-8 bg-red-500 rounded-sm border-2 border-gray-800 text-2xl font-bold tracking-wider">Pridėti naują klientą</button>
+        <a href="/clients/">
+            <button class="mx-auto mt-4 p-4 px-8 bg-red-500 rounded-sm border-2 border-gray-800 text-2xl font-bold tracking-wider">
+                Pridėti naują registraciją
+            </button>
         </a>
     </div>
 </div>

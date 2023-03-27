@@ -1,11 +1,11 @@
 package lt.ku.javacrud.controllers;
 
-import lt.ku.javacrud.entities.Client;
+import lt.ku.javacrud.entities.Workout;
+import lt.ku.javacrud.repositories.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import lt.ku.javacrud.repositories.ClientRepository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,29 +15,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class ClientController {
+public class WorkoutController {
     @Autowired
-    public ClientRepository clientRepository;
+    public WorkoutRepository workoutRepository;
 
-    private final List<String> fields = getClassFields(Client.class);
+    private final List<String> fields = getClassFields(Workout.class);
 
     private final List<String> translatedFields = getTranslatedFields(fields);
 
-    @GetMapping("/clients/")
-    public String clients(Model model) {
-        List<Client> clients = clientRepository.getClients();
+    @GetMapping("/workouts/")
+    public String workouts(Model model) {
+        List<Workout> workouts = workoutRepository.getWorkouts();
 
-        model.addAttribute("title", "Klientų sąrašas");
+        model.addAttribute("title", "Treniruočių sąrašas");
         model.addAttribute("fields", fields);
         model.addAttribute("translatedFields", translatedFields);
-        model.addAttribute("clients", clients);
+        model.addAttribute("workouts", workouts);
 
-        return "clients/list";
+        return "workouts/list";
     }
 
-    @GetMapping("/clients/create")
+    @GetMapping("/workouts/create")
     public String create(Model model) {
-        model.addAttribute("title", "Kuriamas naujas klientas");
+        model.addAttribute("title", "Kuriama nauja treniruotė");
 
         List<String> fieldsNoId = fields.subList(1, fields.size());
         List<String> translatedFieldsNoId = translatedFields.subList(1, translatedFields.size());
@@ -45,70 +45,74 @@ public class ClientController {
         model.addAttribute("fields", fieldsNoId);
         model.addAttribute("translations", translatedFieldsNoId);
 
-        return "clients/create";
+        return "workouts/create";
     }
 
-    @PostMapping("/clients/create")
+    @PostMapping("/workouts/create")
     public String store(
             @RequestParam("name") String name,
-            @RequestParam("surname") String surname,
-            @RequestParam("email") String email,
-            @RequestParam("phone") String phone
+            @RequestParam("date") String date,
+            @RequestParam("max_size") String max_size,
+            @RequestParam("location") String location
     ) {
-        Client client = new Client(name, surname, email, phone);
+        Workout workout = new Workout(name, date, max_size, location);
 
-        clientRepository.save(client);
+        workoutRepository.save(workout);
 
-        return "redirect:/clients/";
+        return "redirect:/workouts/";
     }
 
-    @GetMapping("/clients/edit/{id}")
+    @GetMapping("/workouts/edit/{id}")
     public String edit(
             @PathVariable("id") Integer id,
             Model model
     ) {
-        Client client = clientRepository.getReferenceById(id);
+        Workout workout = workoutRepository.getReferenceById(id);
 
         List<String> fieldsNoId = fields.subList(1, fields.size());
         List<String> translatedFieldsNoId = translatedFields.subList(1, translatedFields.size());
 
-        model.addAttribute("title", "Keičiamas klientas: " + client.getName() + " " + client.getSurname());
-        model.addAttribute("client", client);
+        model.addAttribute(
+                "title",
+                "Keičiama treniruotė: " + workout.getName() + ", " +
+                workout.getDate() + ", " + workout.getLocation()
+        );
+        model.addAttribute("workout", workout);
         model.addAttribute("fields", fieldsNoId);
         model.addAttribute("translations", translatedFieldsNoId);
 
-        return "clients/edit";
+        return "workouts/edit";
     }
 
-    @PostMapping("/clients/edit/{id}")
+    @PostMapping("/workouts/edit/{id}")
     public String edit(
             @PathVariable("id") Integer id,
             @RequestParam("name") String name,
-            @RequestParam("surname") String surname,
-            @RequestParam("email") String email,
-            @RequestParam("phone") String phone
+            @RequestParam("date") String date,
+            @RequestParam("max_size") String max_size,
+            @RequestParam("location") String location
     ) {
-        Client client = clientRepository.getReferenceById(id);
+        Workout workout = workoutRepository.getReferenceById(id);
 
-        client.setName(name);
-        client.setSurname(surname);
-        client.setEmail(email);
-        client.setPhone(phone);
+        workout.setName(name);
+        workout.setDate(date);
+        workout.setMax_size(max_size);
+        workout.setLocation(location);
 
-        clientRepository.save(client);
+        workoutRepository.save(workout);
 
-        return "redirect:/clients/";
+        return "redirect:/workouts/";
     }
 
-    @GetMapping("/clients/delete/{id}")
+    @GetMapping("/workouts/delete/{id}")
     public String delete(
             @PathVariable("id") Integer id
     ) {
-        clientRepository.delete(
-                clientRepository.getReferenceById(id)
+        workoutRepository.delete(
+                workoutRepository.getReferenceById(id)
         );
 
-        return "redirect:/clients/";
+        return "redirect:/workouts/";
     }
 
     private List<String> getTranslatedFields(List<String> fields) {
@@ -124,15 +128,15 @@ public class ClientController {
     private String translate(String text) {
         return switch (text.toLowerCase()) {
             case "id" -> "Id";
-            case "name" -> "Vardas";
-            case "surname" -> "Pavardė";
-            case "email" -> "El. paštas";
-            case "phone" -> "Telefono nr.";
+            case "name" -> "Pavadinimas";
+            case "date" -> "Data";
+            case "max_size" -> "Vietų sk.";
+            case "location" -> "Vieta";
             default -> "";
         };
     }
 
-    private List<String> getClassFields(Class<Client> entity) {
+    private List<String> getClassFields(Class<Workout> entity) {
         Field[] declaredFields = entity.getDeclaredFields();
         ArrayList<String> fields = new ArrayList<>();
 

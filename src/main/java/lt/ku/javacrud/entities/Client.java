@@ -34,6 +34,11 @@ public class Client {
         };
     }
 
+    @Override
+    public String toString() {
+        return name + " " + surname;
+    }
+
     public Client() {
     }
 
@@ -42,11 +47,6 @@ public class Client {
         this.surname = surname;
         this.email = email;
         this.phone = phone;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 
     public Integer getId() {

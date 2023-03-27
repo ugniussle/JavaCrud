@@ -6,6 +6,7 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 </head>
 <body class="bg-red-200">
+<nav th:replace="~{fragments/layout :: nav}"></nav>
 <h1 th:text="${title}" class="text-center mt-6 pb-6 text-2xl font-black text-gray-700 shadow-lg shadow-red-400/50 border-b border-red-300"></h1>
 
 <span>
@@ -15,14 +16,13 @@
 
 <div class="w-11/12 sm:w-10/12 md:w-8/12 lg:w-5/12 mt-6 p-6 mx-auto bg-orange-200 rounded-xl border-4 border-red-500 shadow-2xl shadow-red-400/80 ring ring-red-700">
   <div>
-      <form method="post" action="/create">
+      <form method="post" action="/clients/create">
           <div>
               <div class="w-full mx-auto mt-3 text-center">
                   <div th:each="field, iterStat: ${fields}">
                       <label th:name="${field}" th:text="${translations[iterStat.index]}" class="inline-block w-full text-center text-2xl font-bold text-gray-700"/>
                       <input th:name="${field}" type="text" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
                   </div>
-
               </div>
               <div class="text-center">
                   <button class="mx-auto mt-4 p-4 px-8 bg-red-500 rounded-sm border-2 border-gray-800 text-2xl font-bold tracking-wider">Sukurti</button>
