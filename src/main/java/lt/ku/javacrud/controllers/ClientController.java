@@ -1,14 +1,13 @@
 package lt.ku.javacrud.controllers;
 
+import jakarta.validation.Valid;
 import lt.ku.javacrud.entities.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import lt.ku.javacrud.repositories.ClientRepository;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -39,23 +38,22 @@ public class ClientController {
     public String create(Model model) {
         model.addAttribute("title", "Kuriamas naujas klientas");
 
-        List<String> fieldsNoId = fields.subList(1, fields.size());
-        List<String> translatedFieldsNoId = translatedFields.subList(1, translatedFields.size());
-
-        model.addAttribute("fields", fieldsNoId);
-        model.addAttribute("translations", translatedFieldsNoId);
+        model.addAttribute("client", new Client());
 
         return "clients/create";
     }
 
     @PostMapping("/clients/create")
     public String store(
-            @RequestParam("name") String name,
-            @RequestParam("surname") String surname,
-            @RequestParam("email") String email,
-            @RequestParam("phone") String phone
+            Model model,
+            @Valid
+            @ModelAttribute Client client,
+            BindingResult result
     ) {
-        Client client = new Client(name, surname, email, phone);
+        if(result.hasErrors()) {
+            model.addAttribute("title", "Sukurkite naują klientą");
+            return "/clients/create";
+        }
 
         clientRepository.save(client);
 

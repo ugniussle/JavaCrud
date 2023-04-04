@@ -5,10 +5,7 @@ import lt.ku.javacrud.repositories.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -39,24 +36,15 @@ public class WorkoutController {
     public String create(Model model) {
         model.addAttribute("title", "Kuriama nauja treniruotė");
 
-        List<String> fieldsNoId = fields.subList(1, fields.size());
-        List<String> translatedFieldsNoId = translatedFields.subList(1, translatedFields.size());
-
-        model.addAttribute("fields", fieldsNoId);
-        model.addAttribute("translations", translatedFieldsNoId);
+        model.addAttribute("workout", new Workout());
 
         return "workouts/create";
     }
 
     @PostMapping("/workouts/create")
     public String store(
-            @RequestParam("name") String name,
-            @RequestParam("date") String date,
-            @RequestParam("max_size") String max_size,
-            @RequestParam("location") String location
+            @ModelAttribute Workout workout
     ) {
-        Workout workout = new Workout(name, date, max_size, location);
-
         workoutRepository.save(workout);
 
         return "redirect:/workouts/";

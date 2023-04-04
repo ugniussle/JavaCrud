@@ -1,6 +1,8 @@
 package lt.ku.javacrud.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name="clients")
@@ -9,15 +11,22 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = "Vardas yra privalomas laukelis.")
+    @Length(min = 3, max = 20, message = "Vardas turi būti nuo 3 iki 20 simbolių.")
     @Column
     private String name;
 
+    @NotEmpty(message = "Pavardė yra privalomas laukelis.")
+    @Length(min = 3, max = 25, message = "Pavardė turi būti nuo 3 iki 25 simbolių.")
     @Column
     private String surname;
 
+    @NotEmpty(message = "El. paštas yra privalomas laukelis.")
+    @Email(message = "Blogas el. paštas.")
     @Column
     private String email;
 
+    @Length(max = 15, message = "Numeris turi būti ne ilgesnis nei 15 simbolių.")
     @Column
     private String phone;
 
@@ -40,13 +49,6 @@ public class Client {
     }
 
     public Client() {
-    }
-
-    public Client(String name, String surname, String email, String phone) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.phone = phone;
     }
 
     public Integer getId() {

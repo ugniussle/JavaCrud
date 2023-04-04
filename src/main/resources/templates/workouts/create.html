@@ -16,12 +16,21 @@
 
 <div class="w-11/12 sm:w-10/12 md:w-8/12 lg:w-5/12 mt-6 p-6 mx-auto bg-orange-200 rounded-xl border-4 border-red-500 shadow-2xl shadow-red-400/80 ring ring-red-700">
   <div>
-      <form method="post" action="/workouts/create">
+      <form method="post" action="/workouts/create" th:object="${workout}">
           <div>
               <div class="w-full mx-auto mt-3 text-center">
-                  <div th:each="field, iterStat: ${fields}">
-                      <label th:name="${field}" th:text="${translations[iterStat.index]}" class="inline-block w-full text-center text-2xl font-bold text-gray-700"/>
-                      <input th:name="${field}" type="text" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+                  <div>
+                      <label th:name="name" th:text="'Vardas'" class="inline-block w-full text-center text-2xl font-bold text-gray-700"/>
+                      <input th:name="name" th:value="*{name}" type="text" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+
+                      <label th:name="date" th:text="'Data'" class="inline-block w-full text-center text-2xl font-bold text-gray-700"/>
+                      <input th:name="date" th:value="*{date}" type="text" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+
+                      <label th:name="max_size" th:text="'Vietų sk.'" class="inline-block w-full text-center text-2xl font-bold text-gray-700"/>
+                      <input th:name="max_size" th:value="*{max_size}" type="text" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+
+                      <label th:name="location" th:text="'Vieta'" class="inline-block w-full text-center text-2xl font-bold text-gray-700"/>
+                      <input th:name="location" th:value="*{location}" type="text" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
                   </div>
 
               </div>
