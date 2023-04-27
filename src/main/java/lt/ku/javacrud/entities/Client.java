@@ -26,22 +26,12 @@ public class Client {
     @Column
     private String email;
 
+    @Column(nullable = true)
+    private String document = null;
+
     @Length(max = 15, message = "Numeris turi būti ne ilgesnis nei 15 simbolių.")
     @Column
     private String phone;
-
-    public Object getAttribute(String name) {
-        // System.out.println(name);
-
-        return switch (name.toLowerCase()) {
-            case "id" -> getId();
-            case "name" -> getName();
-            case "surname" -> getSurname();
-            case "email" -> getEmail();
-            case "phone" -> getPhone();
-            default -> "";
-        };
-    }
 
     @Override
     public String toString() {
@@ -73,6 +63,14 @@ public class Client {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public String getEmail() {
