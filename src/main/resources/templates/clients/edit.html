@@ -19,44 +19,35 @@
         <form method="post" enctype="multipart/form-data" th:action="'/clients/edit/'+${client.id}" th:object="${client}">
             <div>
                 <div class="w-full mx-auto mt-3 text-center">
-                    <div>
-                        <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">Vardas</label>
-                        <input th:value="*{name}" name="name" type="text" class="mt-2 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
-                        <div th:if="${#fields.hasErrors('name')}" class="bg-red-500 w-1/2 bg-4 mx-auto border-b-2 border-x-2 border-gray-800">
-                            <div th:each="error: ${#fields.errors('name')}" th:text="${error}"/>
-                        </div>
+                    <div th:each="error: ${#fields.allErrors()}" th:text="${error}"></div>
+
+                    <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">Vardas</label>
+                    <input th:value="*{name}" name="name" type="text" class="mt-2 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+                    <div th:if="${#fields.hasErrors('name')}" class="bg-red-500 w-1/2 bg-4 mx-auto border-b-2 border-x-2 border-gray-800">
+                        <div th:each="error: ${#fields.errors('name')}" th:text="${error}"/>
                     </div>
 
-                    <div>
-                        <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">Pavardė</label>
-                        <input th:value="*{surname}" name="surname" type="text" class="mt-2 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
-                        <div th:if="${#fields.hasErrors('surname')}" class="bg-red-500 w-1/2 bg-4 mx-auto border-b-2 border-x-2 border-gray-800">
-                            <div th:each="error: ${#fields.errors('surname')}" th:text="${error}"/>
-                        </div>
-                    </div >
-
-                    <div>
-                        <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">El. Paštas</label>
-                        <input th:value="*{email}" name="email" type="text" class="mt-2 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
-                        <div th:if="${#fields.hasErrors('email')}" class="bg-red-500 w-1/2 bg-4 mx-auto border-b-2 border-x-2 border-gray-800">
-                            <div th:each="error: ${#fields.errors('email')}" th:text="${error}"/>
-                        </div>
+                    <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">Pavardė</label>
+                    <input th:value="*{surname}" name="surname" type="text" class="mt-2 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+                    <div th:if="${#fields.hasErrors('surname')}" class="bg-red-500 w-1/2 bg-4 mx-auto border-b-2 border-x-2 border-gray-800">
+                        <div th:each="error: ${#fields.errors('surname')}" th:text="${error}"/>
                     </div>
 
-                    <div>
-                        <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">Telefono nr.</label>
-                        <input th:value="*{phone}" name="phone" type="text" class="mt-2 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
-                        <div th:if="${#fields.hasErrors('phone')}" class="bg-red-500 w-1/2 bg-4 mx-auto border-b-2 border-x-2 border-gray-800">
-                            <div th:each="error: ${#fields.errors('phone')}" th:text="${error}"/>
-                        </div>
+                    <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">El. Paštas</label>
+                    <input th:value="*{email}" name="email" type="text" class="mt-2 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+                    <div th:if="${#fields.hasErrors('email')}" class="bg-red-500 w-1/2 bg-4 mx-auto border-b-2 border-x-2 border-gray-800">
+                        <div th:each="error: ${#fields.errors('email')}" th:text="${error}"/>
                     </div>
 
-                    <div>
-                        <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">Sutartis</label>
-                        <div>Dabartinis failas: <span th:text="${client.getDocument()}"></span></div>
-                        <input type="file" name="file" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+                    <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">Telefono nr.</label>
+                    <input th:value="*{phone}" name="phone" type="text" class="mt-2 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
+                    <div th:if="${#fields.hasErrors('phone')}" class="bg-red-500 w-1/2 bg-4 mx-auto border-b-2 border-x-2 border-gray-800">
+                        <div th:each="error: ${#fields.errors('phone')}" th:text="${error}"/>
                     </div>
 
+                    <label class="inline-block w-full text-center text-2xl font-bold text-gray-700">Sutartis</label>
+                    <div>Dabartinis failas: <span th:text="${client.getDocument()}"></span></div>
+                    <input type="file" name="file" class="mt-2 mb-4 w-1/2 border-[3px] rounded-sm border-gray-800 focus:border-red-500 focus:ring-4 focus:ring-red-700">
                 </div>
                 <div class="text-center">
                     <button class="mx-auto mt-4 p-4 px-8 bg-red-500 rounded-sm border-2 border-gray-800 text-2xl font-bold tracking-wider">Išsaugoti</button>

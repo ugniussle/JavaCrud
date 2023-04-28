@@ -10,4 +10,5 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
         return this.findAll();
     }
 
+    Client findByUsername(String username);
 }

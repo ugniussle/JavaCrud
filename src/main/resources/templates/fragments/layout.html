@@ -11,7 +11,8 @@
     <a class="px-2" th:href="'/clients/'">Klientai</a>
     <a class="px-2" th:href="'/workouts/'">Treniruotės</a>
     <a class="px-2" th:href="'/registrations/'">Registracijos</a>
-    <!--<div class="grow"></div>-->
+    <div class="grow"></div>
+    <a sec:authorize="isAuthenticated()" href="/logout">Atsijungti</a>
 </nav>
 </body>
 </html>

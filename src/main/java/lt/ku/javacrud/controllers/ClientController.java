@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,13 +55,15 @@ public class ClientController {
             BindingResult result
     ) {
         if(result.hasErrors()) {
-            model.addAttribute("title", "Sukurkite naują klientą");
+            model.addAttribute("title", "Kuriamas naujas klientas");
             return "/clients/create";
         }
 
         if(!document.isEmpty()) {
             client.setDocument(document.getOriginalFilename());
         }
+
+        client.setPassword(new BCryptPasswordEncoder().encode(client.getPassword()));
 
         clientRepository.save(client);
 
@@ -89,6 +92,9 @@ public class ClientController {
             Model model
     ) {
         Client client = clientRepository.getReferenceById(id);
+
+        System.out.println(client.getUsername());
+        System.out.println(client.getPassword());
 
         model.addAttribute("title", "Keičiamas klientas: " + client.getName() + " " + client.getSurname());
         model.addAttribute("client", client);
